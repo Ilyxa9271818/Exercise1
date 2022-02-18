@@ -3,11 +3,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-public class    LoginPage {
-    public WebDriver driver;
+
+public class LoginPage {
+
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver;
     }
 
     @FindBy(xpath = "//*[contains(@id, 'passp-field-login')]")
@@ -18,9 +18,6 @@ public class    LoginPage {
 
     @FindBy(xpath = "//*[contains(@id, 'passp-field-passwd')]")
     WebElement passwordField;
-
-    @FindBy(xpath = "//*[contains(@class, 'username desk-notif-card__user-name')]")
-    WebElement userMenu;
 
     public void inputLogin(String login) {
         loginField.sendKeys(login);
@@ -34,7 +31,4 @@ public class    LoginPage {
         passwordField.sendKeys(password);
     }
 
-    public String getUserName() {
-        return userMenu.getText();
-    }
 }

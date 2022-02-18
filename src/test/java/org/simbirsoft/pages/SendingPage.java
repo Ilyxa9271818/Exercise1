@@ -6,10 +6,9 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class SendingPage {
-    public WebDriver driver;
+
     public SendingPage (WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver;
     }
 
     @FindBy(xpath = "//*[contains(text(), 'Написать')]")
@@ -24,10 +23,10 @@ public class SendingPage {
     @FindBy(xpath = "//div [@role='textbox']")
     WebElement messageField;
 
-    @FindBy(xpath = "//div [@class = 'ns-view-container-desc mail-MessagesList js-messages-list']/div")
+    @FindBy(xpath = "//span[text() = 'Simbirsoft theme']")
     List<WebElement> numberMessages;
 
-    @FindBy(xpath = "//*[contains(@class, 'Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l')]")
+    @FindBy(css = ".Button2_view_default")
     WebElement sendButton;
 
     public void clickWriteButton() {

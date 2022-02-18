@@ -9,7 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class Waiters {
+
     public WebDriver driver;
+
     public Waiters (WebDriver driver) {
         PageFactory.initElements(driver,this);
         this.driver = driver;
