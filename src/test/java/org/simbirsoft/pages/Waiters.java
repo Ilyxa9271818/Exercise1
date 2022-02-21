@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class Waiters {
 
-    public WebDriver driver;
+    private WebDriver driver;
 
     public Waiters (WebDriver driver) {
         PageFactory.initElements(driver,this);
