@@ -29,16 +29,19 @@ public class SendingPage {
     @FindBy(css = ".Button2_view_default")
     WebElement sendButton;
 
-    public void clickWriteButton() {
+    public SendingPage clickWriteButton() {
         writeButton.click();
+        return this;
     }
 
-    public void inputTo(String to) {
+    public SendingPage inputTo(String to) {
        toField.sendKeys(to);
+        return this;
     }
 
-    public void inputTheme(String theme) {
+    public SendingPage inputTheme(String theme) {
         themeField.sendKeys(theme);
+        return this;
     }
 
     public int numberOfMessages() {
@@ -49,7 +52,8 @@ public class SendingPage {
         sendButton.click();
     }
 
-    public void inputMessages() {
+    public SendingPage inputMessages() {
         messageField.sendKeys("Найдено ", String.valueOf(numberMessages.size()), " писем/ьма");
+        return this;
     }
 }

@@ -2,6 +2,7 @@ package org.simbirsoft.tests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.simbirsoft.helpers.ConfProperties;
+import org.simbirsoft.helpers.Helpers;
 import org.simbirsoft.pages.LoginPage;
 import org.simbirsoft.pages.SendingPage;
 import org.simbirsoft.pages.Waiters;
@@ -25,33 +26,32 @@ public class SendingTest {
 
     @Test
     public void loginAndSendingMessage() {
-        SendingPage sendingPage;
-        Waiters waiters;
-        LoginPage loginPage;
-
-        waiters = new Waiters(driver);
-        sendingPage = new SendingPage(driver);
-        loginPage = new LoginPage(driver);
-
         driver.get(ConfProperties.getProperty("mailpage"));
-        loginPage.clickLoginButton();
-        loginPage.inputLogin(ConfProperties.getProperty("login"));
-        loginPage.clickLoginButton();
-        loginPage.inputPassword(ConfProperties.getProperty("password"));
-        loginPage.clickLoginButton();
 
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.clickLoginButton()
+                .inputLogin(ConfProperties.getProperty("login"))
+                .clickLoginButton()
+                .inputPassword(ConfProperties.getProperty("password"))
+                .clickLoginButton();
+
+        SendingPage sendingPage = new SendingPage(driver);
         int messagesBefore = sendingPage.numberOfMessages();
-        sendingPage.clickWriteButton();
-        sendingPage.inputTo("soft.simbir@yandex.ru");
-        sendingPage.inputTheme("Simbirsoft theme");
-        sendingPage.inputMessages();
-        sendingPage.clickSendButton();
+        sendingPage.clickWriteButton()
+                .inputTo("soft.simbir@yandex.ru")
+                .inputTheme("Simbirsoft theme")
+                .inputMessages()
+                .clickSendButton();
+
+        Waiters waiters = new Waiters(driver);
         waiters.alertSent();
-        driver.navigate().refresh();
+
+        Helpers helpers = new Helpers(driver);
+        helpers.refreshPage();
+
         int messagesAfter = sendingPage.numberOfMessages();
         Assert.assertEquals(messagesBefore +1, messagesAfter, "Сообщение не было отправлено");
         }
-
 
     @AfterMethod
     public void quitDriver() {
