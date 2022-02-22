@@ -5,7 +5,6 @@ import org.simbirsoft.helpers.ConfProperties;
 import org.simbirsoft.helpers.Helpers;
 import org.simbirsoft.pages.LoginPage;
 import org.simbirsoft.pages.SendingPage;
-import org.simbirsoft.pages.Waiters;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -15,7 +14,9 @@ import java.time.Duration;
 public class SendingTest {
 
     private WebDriver driver;
-
+    /**
+     * осуществление первоначальной настройки
+     */
      @BeforeMethod
      public void setUp() {
         System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
@@ -23,7 +24,9 @@ public class SendingTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
-
+    /**
+     * тестовый метод для осуществления авторизации и отправки письма
+     */
     @Test
     public void loginAndSendingMessage() {
         driver.get(ConfProperties.getProperty("mailpage"));
@@ -42,17 +45,17 @@ public class SendingTest {
                 .inputTheme("Simbirsoft theme")
                 .inputMessages()
                 .clickSendButton();
-
-        Waiters waiters = new Waiters(driver);
-        waiters.alertSent();
+        Assert.assertTrue(sendingPage.getAlertSent().isDisplayed());
 
         Helpers helpers = new Helpers(driver);
         helpers.refreshPage();
 
         int messagesAfter = sendingPage.numberOfMessages();
-        Assert.assertEquals(messagesBefore +1, messagesAfter, "Сообщение не было отправлено");
+        Assert.assertEquals(messagesBefore +1, messagesAfter, "Письмо не было отправлено");
         }
-
+    /**
+     * осуществление закрытия окна браузера
+     */
     @AfterMethod
     public void quitDriver() {
         driver.quit();
